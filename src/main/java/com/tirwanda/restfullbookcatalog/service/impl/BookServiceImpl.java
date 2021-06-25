@@ -3,6 +3,7 @@ package com.tirwanda.restfullbookcatalog.service.impl;
 import com.tirwanda.restfullbookcatalog.dto.BookCreateRequestDTO;
 import com.tirwanda.restfullbookcatalog.dto.BookDetailResponseDTO;
 import com.tirwanda.restfullbookcatalog.dto.BookListResponseDTO;
+import com.tirwanda.restfullbookcatalog.dto.BookUpdateRequestDTO;
 import com.tirwanda.restfullbookcatalog.model.Book;
 import com.tirwanda.restfullbookcatalog.service.BookService;
 import org.springframework.stereotype.Service;
@@ -68,5 +69,15 @@ public class BookServiceImpl implements BookService {
         dto.setDescription(book.getDescription());
 
         return dto;
+    }
+
+    @Override
+    public void updateBook(String bookId, BookUpdateRequestDTO dto) {
+        Book book = books.get(bookId);
+        book.setTitle(dto.getTitle());
+        book.setAuthor(dto.getAuthor());
+        book.setDescription(dto.getDescription());
+
+        books.put(book.getId(), book);
     }
 }
