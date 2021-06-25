@@ -1,6 +1,7 @@
 package com.tirwanda.restfullbookcatalog.service.impl;
 
 import com.tirwanda.restfullbookcatalog.dto.BookCreateRequestDTO;
+import com.tirwanda.restfullbookcatalog.dto.BookDetailResponseDTO;
 import com.tirwanda.restfullbookcatalog.dto.BookListResponseDTO;
 import com.tirwanda.restfullbookcatalog.model.Book;
 import com.tirwanda.restfullbookcatalog.service.BookService;
@@ -54,5 +55,18 @@ public class BookServiceImpl implements BookService {
         book.setDescription(dto.getDescription());
 
         books.put(book.getId(), book);
+    }
+
+    @Override
+    public BookDetailResponseDTO findBookDetail(String bookId) {
+        Book book = books.get(bookId);
+        BookDetailResponseDTO dto = new BookDetailResponseDTO();
+
+        dto.setId(book.getId());
+        dto.setTitle(book.getTitle());
+        dto.setAuthor(book.getAuthor());
+        dto.setDescription(book.getDescription());
+
+        return dto;
     }
 }

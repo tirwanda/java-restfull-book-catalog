@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Book;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -23,12 +24,8 @@ public class BookResource {
     }
 
     @GetMapping("/book/{bookId}")
-    public ResponseEntity<BookDetailResponseDTO> findBookDetail(@PathVariable("bookId") Long bookId) {
-        BookDetailResponseDTO dto = new BookDetailResponseDTO();
-        dto.setTitle("Spring Book Catalog");
-        dto.setAuthor("Edho Dwi Tirwanda");
-        dto.setDescription("This is description for book");
-
+    public ResponseEntity<BookDetailResponseDTO> findBookDetail(@PathVariable("bookId") String bookId) {
+        BookDetailResponseDTO dto = bookService.findBookDetail(bookId);
         return ResponseEntity.ok(dto);
     }
 
