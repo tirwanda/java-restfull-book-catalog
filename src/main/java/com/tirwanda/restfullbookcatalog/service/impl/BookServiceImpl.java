@@ -80,4 +80,10 @@ public class BookServiceImpl implements BookService {
 
         books.put(book.getId(), book);
     }
+
+    @Override
+    public void deleteBook(String bookId) {
+        books.remove(bookId);
+    }
+
 }

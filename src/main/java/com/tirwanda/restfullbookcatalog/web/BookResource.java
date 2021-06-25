@@ -48,4 +48,11 @@ public class BookResource {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("book/{bookId}")
+    public ResponseEntity<Void> deleteBook(@PathVariable("bookId") String bookId) {
+        bookService.deleteBook(bookId);
+        return ResponseEntity.ok().build();
+    }
+
+
 }

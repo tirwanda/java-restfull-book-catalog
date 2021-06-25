@@ -14,4 +14,5 @@ public interface BookService {
     public void createNewBook(BookCreateRequestDTO dto);
     public BookDetailResponseDTO findBookDetail(String bookId);
     public void updateBook(String bookId ,BookUpdateRequestDTO dto);
+    public void deleteBook(String bookId);
 }
