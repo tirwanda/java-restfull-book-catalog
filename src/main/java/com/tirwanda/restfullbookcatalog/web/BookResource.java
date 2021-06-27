@@ -37,8 +37,8 @@ public class BookResource {
     }
 
     @GetMapping("/book")
-    public ResponseEntity<List<BookListResponseDTO>> findBookAll() {
-        List<BookListResponseDTO> dtos = bookService.findBookAll();
+    public ResponseEntity<List<BookListResponseDTO>> findBookAll(@RequestParam(value = "title", required = false) String title) {
+        List<BookListResponseDTO> dtos = bookService.findBookAll(title);
         return ResponseEntity.ok(dtos);
     }
 

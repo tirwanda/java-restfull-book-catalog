@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public interface BookService {
-    public List<BookListResponseDTO> findBookAll();
+    public List<BookListResponseDTO> findBookAll(String title);
     public void createNewBook(BookCreateRequestDTO dto);
     public BookDetailResponseDTO findBookDetail(Long bookId);
     public void updateBook(Long bookId ,BookUpdateRequestDTO dto);
