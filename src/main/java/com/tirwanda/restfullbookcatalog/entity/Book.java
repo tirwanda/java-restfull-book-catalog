@@ -1,6 +1,5 @@
 package com.tirwanda.restfullbookcatalog.entity;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;

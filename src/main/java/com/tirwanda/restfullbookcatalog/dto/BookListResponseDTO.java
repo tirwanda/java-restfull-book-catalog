@@ -1,16 +1,16 @@
 package com.tirwanda.restfullbookcatalog.dto;
 
 public class BookListResponseDTO {
-    private String id;
+    private Long id;
     private String title;
     private String author;
     private String description;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

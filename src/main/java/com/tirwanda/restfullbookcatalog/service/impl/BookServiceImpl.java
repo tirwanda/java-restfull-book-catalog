@@ -4,8 +4,12 @@ import com.tirwanda.restfullbookcatalog.dto.BookCreateRequestDTO;
 import com.tirwanda.restfullbookcatalog.dto.BookDetailResponseDTO;
 import com.tirwanda.restfullbookcatalog.dto.BookListResponseDTO;
 import com.tirwanda.restfullbookcatalog.dto.BookUpdateRequestDTO;
-import com.tirwanda.restfullbookcatalog.model.Book;
+import com.tirwanda.restfullbookcatalog.entity.Book;
+import com.tirwanda.restfullbookcatalog.exception.ResourceNotFoundException;
+import com.tirwanda.restfullbookcatalog.repository.BookRepository;
 import com.tirwanda.restfullbookcatalog.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,30 +18,31 @@ import java.util.stream.Collectors;
 @Service
 public class BookServiceImpl implements BookService {
 
-    Map<String, Book> books = new HashMap<>();
+    @Autowired
+    private BookRepository bookRepository;
 
-    public BookServiceImpl() {
-        Book book1 = new Book();
-        book1.setId("1");
-        book1.setTitle("Java Spring Boot");
-        book1.setAuthor("Edho Dwi");
-        book1.setDescription("Learn Java Spring Boot");
-
-        Book book2 = new Book();
-        book2.setId("2");
-        book2.setTitle("Java Data JPA");
-        book2.setAuthor("Edho Dwi");
-        book2.setDescription("Learn Java Data Jpa");
-
-        books.put(book1.getId(), book1);
-        books.put(book2.getId(), book2);
-    }
+//    public BookServiceImpl() {
+//        Book book1 = new Book();
+//        book1.setId("1");
+//        book1.setTitle("Java Spring Boot");
+//        book1.setAuthor("Edho Dwi");
+//        book1.setDescription("Learn Java Spring Boot");
+//
+//        Book book2 = new Book();
+//        book2.setId("2");
+//        book2.setTitle("Java Data JPA");
+//        book2.setAuthor("Edho Dwi");
+//        book2.setDescription("Learn Java Data Jpa");
+//
+//        books.put(book1.getId(), book1);
+//        books.put(book2.getId(), book2);
+//    }
 
     @Override
     public List<BookListResponseDTO> findBookAll() {
-        List<Book> bookResponse = new ArrayList<>(books.values());
+        List<Book> bookResponses = bookRepository.findAll();
 
-        return bookResponse.stream().map((book) -> {
+        return bookResponses.stream().map((book) -> {
             BookListResponseDTO dto = new BookListResponseDTO();
             dto.setId(book.getId());
             dto.setTitle(book.getTitle());
@@ -50,17 +55,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public void createNewBook(BookCreateRequestDTO dto) {
         Book book = new Book();
-        book.setId(UUID.randomUUID().toString());
         book.setTitle(dto.getTitle());
         book.setAuthor(dto.getAuthor());
         book.setDescription(dto.getDescription());
 
-        books.put(book.getId(), book);
+        bookRepository.save(book);
     }
 
     @Override
-    public BookDetailResponseDTO findBookDetail(String bookId) {
-        Book book = books.get(bookId);
+    public BookDetailResponseDTO findBookDetail(Long bookId) {
+        Book book = bookRepository.findById(bookId).
+                orElseThrow(() -> new ResourceNotFoundException("Book not Found"));
         BookDetailResponseDTO dto = new BookDetailResponseDTO();
 
         dto.setId(book.getId());
@@ -72,18 +77,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBook(String bookId, BookUpdateRequestDTO dto) {
-        Book book = books.get(bookId);
+    public void updateBook(Long bookId, BookUpdateRequestDTO dto) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book not Found"));
         book.setTitle(dto.getTitle());
         book.setAuthor(dto.getAuthor());
         book.setDescription(dto.getDescription());
 
-        books.put(book.getId(), book);
+        bookRepository.save(book);
     }
 
     @Override
-    public void deleteBook(String bookId) {
-        books.remove(bookId);
+    public void deleteBook(Long bookId) {
+        bookRepository.deleteById(bookId);
     }
 
 }

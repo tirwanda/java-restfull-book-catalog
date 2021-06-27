@@ -25,7 +25,7 @@ public class BookResource {
     }
 
     @GetMapping("/book/{bookId}")
-    public ResponseEntity<BookDetailResponseDTO> findBookDetail(@PathVariable("bookId") String bookId) {
+    public ResponseEntity<BookDetailResponseDTO> findBookDetail(@PathVariable("bookId") Long bookId) {
         BookDetailResponseDTO dto = bookService.findBookDetail(bookId);
         return ResponseEntity.ok(dto);
     }
@@ -43,13 +43,13 @@ public class BookResource {
     }
 
     @PutMapping("/book/{bookId}")
-    public ResponseEntity<Void> updateBook(@PathVariable("bookId") String bookId, @RequestBody BookUpdateRequestDTO dto) {
+    public ResponseEntity<Void> updateBook(@PathVariable("bookId") Long bookId, @RequestBody BookUpdateRequestDTO dto) {
         bookService.updateBook(bookId, dto);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("book/{bookId}")
-    public ResponseEntity<Void> deleteBook(@PathVariable("bookId") String bookId) {
+    public ResponseEntity<Void> deleteBook(@PathVariable("bookId") Long bookId) {
         bookService.deleteBook(bookId);
         return ResponseEntity.ok().build();
     }
